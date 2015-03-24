@@ -76,7 +76,7 @@ public class View extends JFrame {
                         }else{
                             if(grid.getSurroundingMineNumber(coords[0], coords[1]) == 0) {
                                 ArrayList<Point> blanks = new ArrayList<>();
-                                blanks = grid.checkBlankSquare(coords[0], coords[1], blanks);
+                                blanks = grid.checkBlankSquare(new Point(coords[0], coords[1]));
                                 clear(blanks);
                             }
                             jlabel.setIcon(dispNumber(coords[0], coords[1]));

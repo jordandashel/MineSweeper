@@ -13,6 +13,15 @@ public class Square {
 
     private boolean squareIsFlagged;
     private boolean squareIsMine;
+    private boolean squareIsBlank;
+
+    public boolean isSquareIsBlank() {
+        return squareIsBlank;
+    }
+
+    public void setSquareIsBlank(boolean squareIsBlank) {
+        this.squareIsBlank = squareIsBlank;
+    }
     private boolean isChecked = false; // used as a check in Grid
     
     Square(boolean isMine){
