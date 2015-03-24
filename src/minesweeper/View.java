@@ -43,7 +43,6 @@ public class View extends JFrame {
         
         f.setResizable(false);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        System.out.println("this is happening");
         
         p = new JPanel();
         LayoutManager lm = new GridLayout(board.getDim(), board.getDim(), 0, 0);
