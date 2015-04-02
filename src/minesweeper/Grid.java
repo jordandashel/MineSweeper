@@ -35,38 +35,28 @@ public class Grid {
         }
     }
 
-    private int x, y;
-    private Random rand = new Random();
-
     private void populateMinefield() {
         for (int i = 0; i < numMines; i++) {
             placeMineInRandomPosition();
         }
     }
-
+    
     private void placeMineInRandomPosition() {
-        x = rand.nextInt(dim);
-        y = rand.nextInt(dim);
-        checkForRepeatLocation();
+        Point p = new Point(getNewRandomCoord(), getNewRandomCoord());
+        checkForRepeatLocation(p);
     }
 
-    private boolean isRepeat;
-
-    private void checkForRepeatLocation() {
-        isRepeat = true;
-        while (isRepeat) {
-            checkSquareHasMine();
+    private void checkForRepeatLocation(Point p) {
+        while (getIsMine(p.x, p.y)) {
+            p.x = getNewRandomCoord();
+            p.y = getNewRandomCoord();
         }
+        grid[p.x][p.y].setSquareIsMine(true);
     }
-
-    private void checkSquareHasMine() {
-        if (grid[x][y].isSquareIsMine()) {
-            x = rand.nextInt(dim);
-            y = rand.nextInt(dim);
-        } else {
-            grid[x][y].setSquareIsMine(true);
-            isRepeat = false;
-        }
+    
+    private int getNewRandomCoord(){
+        Random rand = new Random();
+        return rand.nextInt(dim);
     }
     
     /**
@@ -78,7 +68,7 @@ public class Grid {
         ArrayList<Point> surroundingBlankSquares = filterForBlankSquares(
                 getAdjacentSquares(point));
         
-        ArrayList<Point> allBlankSquares = new ArrayList<Point>();
+        ArrayList<Point> allBlankSquares = new ArrayList<>();
         for (Point p : surroundingBlankSquares){
             if(!getIsCheckedSquare(p.x, p.y)){
                 allBlankSquares.add(p);
@@ -91,7 +81,7 @@ public class Grid {
     }
 
     public ArrayList<Point> getAdjacentSquares(Point point){
-        ArrayList<Point> blanks = new ArrayList<Point>();
+        ArrayList<Point> blanks = new ArrayList<>();
         
         for (int horiz = -1; horiz <= 1; horiz++) { //x
             for (int vert = -1; vert <= 1; vert++) { //y
@@ -112,7 +102,7 @@ public class Grid {
     }
     
     public ArrayList<Point> filterForBlankSquares(ArrayList<Point> points){
-        ArrayList<Point> results = new ArrayList<Point>();
+        ArrayList<Point> results = new ArrayList<>();
         
         for (Point p : points){
             if (getIsBlankSquare(p.x, p.y)){
@@ -123,7 +113,7 @@ public class Grid {
     }
     
     public ArrayList<Point> filterForMines(ArrayList<Point> points){
-        ArrayList<Point> results = new ArrayList<Point>();
+        ArrayList<Point> results = new ArrayList<>();
         
         for (Point p : points){
             if (getIsMine(p.x, p.y)){
